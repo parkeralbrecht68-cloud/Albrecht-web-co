@@ -686,3 +686,17 @@ footer .brand-mark {
     width: 100%;
   }
 }
+/* American flag hero background */
+.hero {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("E859FEBD-A22C-4511-84F3-79E4B7B7BE3E.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
