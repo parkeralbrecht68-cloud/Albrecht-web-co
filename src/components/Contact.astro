@@ -1,0 +1,170 @@
+---
+import { studio, packages } from "../data/studio";
+const { route = false } = Astro.props;
+---
+
+<section
+  class:list={["contact-section", "section-pad", { "route-section": route }]}
+  id="contact"
+  aria-labelledby="contact-heading"
+>
+  <div class="shell">
+    <div class="section-topline">
+      <p class="eyebrow">04 / Let's make it happen</p>
+      <span class="small-label">A direct conversation.</span>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-copy">
+        {route ? (
+          <h1 id="contact-heading">
+            Let’s build your
+            <br />
+            <span>next chapter.</span>
+          </h1>
+        ) : (
+          <h2 id="contact-heading">
+            Let’s build your
+            <br />
+            <span>next chapter.</span>
+          </h2>
+        )}
+        <p>
+          Tell me what you do, where you want to go, and what your website needs
+          to accomplish. We’ll start there.
+        </p>
+        <div class="owner">
+          <span class="owner-monogram" aria-hidden="true">
+            PA
+          </span>
+          <div>
+            <strong>{studio.owner}</strong>
+            <span>Albrecht Web Co. / Owner & developer</span>
+          </div>
+        </div>
+        <div class="direct-contact">
+          <a href={`mailto:${studio.email}`}>
+            <span>Email directly</span>
+            {studio.email}
+          </a>
+          <a href={`tel:${studio.phone}`}>
+            <span>Give me a call</span>
+            {studio.phoneLabel}
+          </a>
+        </div>
+        <p class="contact-footnote">
+          Military owned & operated.
+          <br />
+          Veterans receive 15% off every package and Deluxe monthly care.
+        </p>
+      </div>
+      <form id="project-form" class="project-form" data-email={studio.email}>
+        <div class="form-heading">
+          <h3>Start your project.</h3>
+          <span class="small-label">Your next chapter</span>
+        </div>
+        <div class="field-pair">
+          <div class="field">
+            <label for="client-name">
+              Your name <span>(required)</span>
+            </label>
+            <input
+              id="client-name"
+              name="name"
+              autocomplete="name"
+              required
+              maxlength="100"
+              placeholder="First and last name"
+            />
+          </div>
+          <div class="field">
+            <label for="client-email">
+              Your email <span>(required)</span>
+            </label>
+            <input
+              id="client-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="200"
+              placeholder="you@business.com"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label for="business-name">Business name</label>
+          <input
+            id="business-name"
+            name="business"
+            autocomplete="organization"
+            maxlength="150"
+            placeholder="What’s your business called?"
+          />
+        </div>
+        <div class="field">
+          <label for="project-package">Package</label>
+          <select id="project-package" name="package">
+            <option value="unsure">I’d like help choosing</option>
+            {packages.map((plan) => (
+              <option value={plan.id}>
+                {plan.name} — ${plan.price.toLocaleString("en-US")}{" "}
+                {plan.monthly ? `setup + $${plan.monthly}/month` : "one time"}
+              </option>
+            ))}
+          </select>
+        </div>
+        <label class="veteran-field">
+          <input type="checkbox" id="contact-veteran" name="veteran" />
+          <span>I’m a veteran — apply the 15% discount.</span>
+        </label>
+        <div class="estimate" id="project-estimate" hidden>
+          <span class="eyebrow">Your package estimate</span>
+          <strong id="estimate-price"></strong>
+        </div>
+        <div class="field">
+          <label for="project-details">
+            What do you have in mind? <span>(required)</span>
+          </label>
+          <textarea
+            id="project-details"
+            name="details"
+            required
+            minlength="10"
+            maxlength="1800"
+            rows="4"
+            placeholder="Your business, the pages or features you need, and your ideal timeline…"
+          ></textarea>
+        </div>
+        <button class="button button-blue" type="submit" disabled>
+          Prepare project email
+        </button>
+        <p class="form-note">
+          Opens an email draft for you to review and send.
+        </p>
+        <noscript>
+          <p>
+            Email <a href={`mailto:${studio.email}`}>{studio.email}</a> with
+            your project details.
+          </p>
+        </noscript>
+        <div class="draft-ready" id="draft-ready" hidden>
+          <p id="form-status" role="status"></p>
+          <div class="draft-actions">
+            <a
+              class="text-link"
+              id="open-draft"
+              href={`mailto:${studio.email}`}
+            >
+              Open email draft again
+            </a>
+            <button type="button" id="copy-draft">
+              Copy project details
+            </button>
+          </div>
+          <label for="draft-text">Your draft</label>
+          <textarea id="draft-text" readonly rows="7"></textarea>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

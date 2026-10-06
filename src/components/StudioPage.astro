@@ -1,0 +1,252 @@
+---
+import { studio, packages, metadata, type Page } from "../data/studio";
+import Journey from "./Journey.astro";
+import Portfolio from "./Portfolio.astro";
+import Services from "./Services.astro";
+import Pricing from "./Pricing.astro";
+import Contact from "./Contact.astro";
+import StartupIntro from "./StartupIntro.astro";
+import "../styles/studio.css";
+interface Props {
+  page?: Page;
+}
+const { page = "home" } = Astro.props;
+const meta = metadata[page];
+const canonical = `${studio.url}${page === "home" ? "/" : `/${page}/`}`;
+const navLink = (name: string) =>
+  page === "home" ? `#${name}` : name === "work" ? "/#work" : `/${name}/`;
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${studio.url}/#organization`,
+      name: studio.name,
+      url: studio.url,
+      email: studio.email,
+      telephone: studio.phone,
+      description:
+        "Military-owned and operated custom website design and development. Veterans receive 15% off.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${studio.url}/#website`,
+      url: `${studio.url}/`,
+      name: studio.name,
+      publisher: { "@id": `${studio.url}/#organization` },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonical}#webpage`,
+      url: canonical,
+      name: meta.title,
+      description: meta.description,
+      isPartOf: { "@id": `${studio.url}/#website` },
+      inLanguage: "en-US",
+    },
+    ...(page === "home" || page === "pricing"
+      ? packages.map((plan) => ({
+          "@type": "Service",
+          name: `${plan.name} website design`,
+          serviceType: "Custom website design",
+          provider: { "@id": `${studio.url}/#organization` },
+          description: plan.description,
+          offers: {
+            "@type": "Offer",
+            url: `${studio.url}/pricing/`,
+            price: plan.price,
+            priceCurrency: "USD",
+            description: plan.monthly
+              ? "$1,300 setup plus $100/month for ongoing website care and updates. Veterans receive 15% off both."
+              : `${plan.name} website design. Veterans receive 15% off.`,
+            ...(plan.monthly
+              ? {
+                  priceSpecification: {
+                    "@type": "CompoundPriceSpecification",
+                    priceComponent: [
+                      {
+                        "@type": "UnitPriceSpecification",
+                        price: 1300,
+                        priceCurrency: "USD",
+                        name: "One-time website setup",
+                      },
+                      {
+                        "@type": "UnitPriceSpecification",
+                        price: 100,
+                        priceCurrency: "USD",
+                        unitText: "month",
+                        name: "Monthly website care",
+                      },
+                    ],
+                  },
+                }
+              : {}),
+          },
+        }))
+      : []),
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta name="theme-color" content="#080a0d" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="robots"
+      content={
+        page === "notfound"
+          ? "noindex, follow"
+          : "index, follow, max-image-preview:large"
+      }
+    />
+    {page !== "notfound" && <link rel="canonical" href={canonical} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={studio.name} />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+    {page !== "notfound" && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(schema).replace(/</g, "\\u003c")}
+      />
+    )}
+  </head>
+  <body data-page={page}>
+    {page === "home" && <StartupIntro />}
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header">
+      <div class="shell nav-wrap">
+        <a class="brand" href="/" aria-label="Albrecht Web Co. home">
+          <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+            <path d="M7 39 20 9h8l13 30H30l-6-17-6 17H7Z" fill="currentColor" />
+            <path d="M18 31h12v6H18z" fill="currentColor" />
+          </svg>
+          <span>
+            ALBRECHT<small>WEB CO.</small>
+          </span>
+        </a>
+        <nav class="desktop-nav" aria-label="Main navigation">
+          <a href={navLink("work")}>The work</a>
+          <a
+            href={navLink("services")}
+            aria-current={page === "services" ? "page" : undefined}
+          >
+            The approach
+          </a>
+          <a
+            href={navLink("pricing")}
+            aria-current={page === "pricing" ? "page" : undefined}
+          >
+            Packages
+          </a>
+          <a
+            class="nav-cta"
+            href={navLink("contact")}
+            aria-current={page === "contact" ? "page" : undefined}
+          >
+            Start a project
+          </a>
+        </nav>
+        <details class="mobile-menu">
+          <summary>
+            Menu <span class="menu-lines" aria-hidden="true"></span>
+          </summary>
+          <nav aria-label="Mobile navigation">
+            <a href="/">Home</a>
+            <a href={navLink("work")}>The work</a>
+            <a href={navLink("services")}>The approach</a>
+            <a href={navLink("pricing")}>Packages</a>
+            <a href={navLink("contact")}>Start a project</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main">
+      {page === "home" && (
+        <>
+          <Journey />
+          <Portfolio />
+        </>
+      )}
+      {(page === "home" || page === "services") && (
+        <Services route={page === "services"} />
+      )}
+      {(page === "home" || page === "pricing") && (
+        <Pricing route={page === "pricing"} />
+      )}
+      {(page === "home" || page === "contact") && (
+        <Contact route={page === "contact"} />
+      )}
+      {page === "notfound" && (
+        <section class="shell route-section section-pad">
+          <p class="eyebrow">404 / Page not found</p>
+          <h1>
+            Let’s get you
+            <br />
+            back on track.
+          </h1>
+          <p>This page may have moved, or the address may be incorrect.</p>
+          <a class="button button-white" href="/">
+            Back to the homepage
+          </a>
+        </section>
+      )}
+      {(page === "services" || page === "pricing") && (
+        <section class="route-cta shell">
+          <h2>
+            Let’s build your
+            <br />
+            <span>next chapter.</span>
+          </h2>
+          <a class="button button-white" href="/contact/">
+            Start a project
+          </a>
+        </section>
+      )}
+    </main>
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="footer-top">
+          <a class="footer-brand" href="/">
+            Albrecht Web Co.
+          </a>
+          <p>Built with purpose. Made to stand apart.</p>
+          <a href="#main" class="text-link">
+            Back to top
+          </a>
+        </div>
+        <div class="footer-bottom">
+          <span>© {new Date().getFullYear()} Albrecht Web Co.</span>
+          <span>Military owned & operated</span>
+          <nav aria-label="Footer navigation">
+            <a href="/services/">Services</a>
+            <a href="/pricing/">Pricing</a>
+            <a href="/contact/">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+    <script>
+      import { initStudio } from "../scripts/studio";
+      import { initJourneyControls } from "../scripts/journey-loader";
+      import { initStartupIntro } from "../scripts/startup-intro";
+      const introReady = initStartupIntro();
+      initStudio();
+      initJourneyControls(introReady);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+GSAP and ScrollTrigger 3.15.0
+Copyright 2025 Webflow. All rights reserved.
+Standard No Charge GSAP License:
+https://gsap.com/community/standard-license/
+
+The installed package and built output retain their original proprietary notices.
+GSAP is not MIT-licensed. Refer to the official license linked above.

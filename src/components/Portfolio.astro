@@ -1,0 +1,166 @@
+---
+import { projects } from "../data/studio";
+import { macbookKeyboard } from "../data/device";
+---
+
+<section
+  class="work-section section-pad"
+  id="work"
+  aria-labelledby="work-heading"
+>
+  <div class="shell">
+    <div class="section-topline">
+      <p class="eyebrow">01 / Selected work</p>
+      <span class="small-label">Ideas, made real.</span>
+    </div>
+    <div class="section-heading">
+      <h2 id="work-heading">
+        Different ambitions.
+        <br />
+        <span>Distinct outcomes.</span>
+      </h2>
+      <p>
+        Original products, designed and developed around the people who use
+        them.
+      </p>
+    </div>
+    <div class="project-selector" role="tablist" aria-label="Choose a project">
+      {projects.map((project, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${project.id}`}
+          aria-controls={`panel-${project.id}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? 0 : -1}
+          data-project-tab={project.id}
+        >
+          <span>{project.number}</span>
+          {project.name}
+          <small>{project.live ? "LIVE" : "SOURCE PREVIEW"}</small>
+        </button>
+      ))}
+    </div>
+    <div class="project-panels">
+      {projects.map((project, index) => (
+        <article
+          class="project-panel"
+          id={`panel-${project.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${project.id}`}
+          tabindex="0"
+          data-project-panel={project.id}
+          style={`--project-accent:${project.accent}`}
+        >
+          <div class="project-toolbar">
+            <div class="project-address">
+              <span class:list={["status-mark", { live: project.live }]}></span>
+              {project.domain}
+            </div>
+            <div
+              class="device-switch"
+              role="group"
+              aria-label={`${project.name} presentation`}
+            >
+              <button type="button" data-device="desktop" aria-pressed="true">
+                Desktop
+              </button>
+              <button type="button" data-device="mobile" aria-pressed="false">
+                Mobile
+              </button>
+            </div>
+          </div>
+          <div class="project-display" data-device-view="desktop">
+            <figure class="project-desktop">
+              <div class="macbook-lid">
+                <span class="macbook-camera" aria-hidden="true"></span>
+                <img
+                  src={project.desktop}
+                  width="1440"
+                  height="1000"
+                  alt={`Desktop: ${project.alt}`}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  decoding="async"
+                />
+                <span class="macbook-wordmark" aria-hidden="true">MacBook Pro</span>
+              </div>
+              <div class="macbook-deck" aria-hidden="true">
+                <span class="macbook-speaker macbook-speaker-left"></span>
+                <div class="macbook-keyboard">
+                  {macbookKeyboard.map((row) => (
+                    <div class="macbook-key-row">
+                      {row.map((key) => <span style={`flex-grow:${key.width}`}>{key.label}</span>)}
+                    </div>
+                  ))}
+                </div>
+                <span class="macbook-speaker macbook-speaker-right"></span>
+                <span class="macbook-trackpad"></span>
+                <span class="macbook-notch"></span>
+              </div>
+              <figcaption class="sr-only">
+                Desktop screenshot. {project.source}
+              </figcaption>
+            </figure>
+            <figure class="project-mobile">
+              <img
+                src={project.mobile}
+                width="390"
+                height="844"
+                alt={`Mobile: ${project.alt}`}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="sr-only">
+                Mobile screenshot. {project.source}
+              </figcaption>
+            </figure>
+            <div class="missing-asset" hidden>
+              <p>This project preview is being updated.</p>
+              <a href="#contact">Ask Parker about this project</a>
+            </div>
+          </div>
+          <div class="project-details">
+            <div>
+              <p class="eyebrow">{project.category}</p>
+              <h3>{project.name}</h3>
+              <span class="project-status">{project.status}</span>
+            </div>
+            <div>
+              <p class="project-description">{project.description}</p>
+              <ul class="project-tags">
+                {project.services.map((service) => (
+                  <li>{service}</li>
+                ))}
+              </ul>
+              {project.url ? (
+                <a
+                  class="text-link"
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit live project
+                  <span class="sr-only"> (opens a new tab)</span>
+                </a>
+              ) : (
+                <p class="preview-note">
+                  Source preview · Public link to be confirmed
+                </p>
+              )}
+            </div>
+          </div>
+          <details class="capture-details">
+            <summary>About this presentation</summary>
+            <p>{project.source}</p>
+          </details>
+        </article>
+      ))}
+    </div>
+    <noscript>
+      <p>
+        JavaScript is off. All three projects and their desktop and mobile
+        screenshots are displayed below.
+      </p>
+    </noscript>
+  </div>
+</section>

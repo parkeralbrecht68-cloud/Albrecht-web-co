@@ -1,0 +1,156 @@
+---
+import { packages } from "../data/studio";
+const { route = false } = Astro.props;
+---
+
+<section
+  class:list={["pricing-section", "section-pad", { "route-section": route }]}
+  id="pricing"
+  aria-labelledby="pricing-heading"
+>
+  <div class="shell">
+    <div class="section-topline">
+      <p class="eyebrow">03 / Your next move</p>
+      <span class="small-label">Clear packages. Personal attention.</span>
+    </div>
+    <div class="section-heading">
+      <div>
+        {route ? (
+          <h1 id="pricing-heading">
+            Match your
+            <br />
+            <span>ambition.</span>
+          </h1>
+        ) : (
+          <h2 id="pricing-heading">
+            Match your
+            <br />
+            <span>ambition.</span>
+          </h2>
+        )}
+        <p>Three starting points. One standard of care.</p>
+      </div>
+      <div class="discount-box">
+        <label class="discount-control">
+          <input
+            id="veteran-toggle"
+            type="checkbox"
+            aria-describedby="discount-note"
+          />
+          <span class="toggle-track" aria-hidden="true"></span>
+          <span>
+            Veteran pricing <strong>−15%</strong>
+          </span>
+        </label>
+        <p id="discount-note">
+          Military owned & operated. Thank you for your service.
+        </p>
+      </div>
+    </div>
+    <p
+      class="sr-only"
+      id="pricing-announcement"
+      aria-live="polite"
+      aria-atomic="true"
+    ></p>
+    <div class="pricing-grid">
+      {packages.map((plan) => (
+        <article
+          class:list={["price-card", { featured: plan.id === "professional" }]}
+          data-plan={plan.id}
+        >
+          <div class="card-top">
+            <span>{plan.number}</span>
+            <span>
+              {plan.id === "professional"
+                ? "Built for growth"
+                : plan.id === "basic"
+                  ? "The foundation"
+                  : "The full experience"}
+            </span>
+          </div>
+          <h3>{plan.name}</h3>
+          <p class="plan-tagline">{plan.tagline}</p>
+          <div class="price-area">
+            <div class="price-line">
+              <span class="price-value" data-base-price={plan.price}>
+                ${plan.price.toLocaleString("en-US")}
+              </span>
+              <span>{plan.monthly ? "setup" : "one time"}</span>
+            </div>
+            <p class="monthly-line">
+              {plan.monthly ? (
+                <>
+                  <span>+ </span>
+                  <strong data-base-price={plan.monthly}>
+                    ${plan.monthly}
+                  </strong>
+                  <span> / month</span>
+                </>
+              ) : (
+                "No monthly plan fee"
+              )}
+            </p>
+            <p class="savings-line" data-saving-base={plan.price}></p>
+          </div>
+          <p class="plan-description">{plan.description}</p>
+          <ul class="features">
+            {plan.features.map((feature) => (
+              <li>{feature}</li>
+            ))}
+          </ul>
+          <a
+            class:list={[
+              "button",
+              plan.id === "professional" ? "button-blue" : "button-outline",
+            ]}
+            href={route ? `/contact/?package=${plan.id}` : "#contact"}
+            data-select-plan={plan.id}
+          >
+            {plan.action}
+          </a>
+        </article>
+      ))}
+    </div>
+    <div class="pricing-notes">
+      <p>
+        All prices in USD. Deluxe includes a setup fee and ongoing monthly care.
+        The veteran discount applies to both.
+      </p>
+      <p>
+        Domain, hosting, paid tools, and any expanded scope are confirmed
+        separately before work begins.
+      </p>
+    </div>
+    <div class="package-helper">
+      <div>
+        <p class="eyebrow">Find your fit</p>
+        <h3>
+          What does your
+          <br />
+          business need?
+        </h3>
+      </div>
+      <div>
+        <label for="business-goal">Your main priority</label>
+        <select id="business-goal">
+          <option value="basic">Get my business online</option>
+          <option value="professional">Showcase a growing business</option>
+          <option value="deluxe">A premium site with ongoing care</option>
+        </select>
+      </div>
+      <div class="helper-result" aria-live="polite">
+        <span class="eyebrow">Your starting point</span>
+        <strong id="recommended-name">Basic</strong>
+        <a
+          id="recommended-link"
+          class="text-link"
+          href={route ? "/contact/?package=basic" : "#contact"}
+          data-select-plan="basic"
+        >
+          Talk about this package
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
