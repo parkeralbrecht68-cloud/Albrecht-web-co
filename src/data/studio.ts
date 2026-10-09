@@ -13,22 +13,22 @@ export const metadata: Record<Page, { title: string; description: string }> = {
   home: {
     title: "Affordable Custom Website Design | Albrecht Web Co.",
     description:
-      "Affordable custom website design for businesses nationwide. Custom coded websites from $300, clear packages, and personal support from Parker Albrecht.",
+      "Affordable custom website design and affordable web design for small businesses nationwide. Custom business websites start at $300.",
   },
   services: {
     title: "Custom Coded Websites for Small Businesses | Albrecht Web Co.",
     description:
-      "Custom coded websites for small businesses, built around your brand with mobile-friendly layouts, clear navigation, and search-friendly page structure.",
+      "Custom coded websites and responsive website design for small businesses, with mobile-friendly layouts, clear navigation, and search-friendly structure.",
   },
   pricing: {
     title: "Small Business Website Packages | Albrecht Web Co.",
     description:
-      "Small business website packages: Basic $300, Professional $700, Deluxe $1,300 + $100/month. Explore small business website design under $500.",
+      "Small business website packages and one-time payment website design: Basic $300, Professional $700, and Deluxe $1,300 plus $100/month.",
   },
   contact: {
-    title: "Hire Someone to Build a Business Website | Albrecht Web Co.",
+    title: "Hire a Small Business Website Designer | Albrecht Web Co.",
     description:
-      "Ready to hire someone to build a business website? Work directly with Parker Albrecht. Tell me your goals, budget, and pages to get your project started.",
+      "Ready to hire someone to build a business website? Work directly with Parker Albrecht for nationwide custom business website design.",
   },
   notfound: {
     title: "Page Not Found | Albrecht Web Co.",
@@ -63,7 +63,7 @@ export const packages = [
     monthly: 0,
     tagline: "Room for a growing business.",
     description:
-      "A detailed website for growing businesses, with expanded service and product sections, advanced interactions, and clear navigation.",
+      "Professional website design for small businesses that need expanded service and product sections, advanced interactions, and clear navigation.",
     features: [
       "Everything in Basic",
       "More detailed service and product sections",
@@ -81,7 +81,7 @@ export const packages = [
     monthly: 100,
     tagline: "A custom site with ongoing care.",
     description:
-      "A premium custom website with advanced interactions, dedicated page URLs, and monthly care to keep your content up to date.",
+      "Custom business website design with advanced interactions, dedicated page URLs, and monthly care to keep your content up to date.",
     features: [
       "Everything in Professional",
       "Premium interactive design",
