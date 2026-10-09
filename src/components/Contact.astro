@@ -11,7 +11,7 @@ const { route = false } = Astro.props;
   <div class="shell">
     <div class="section-topline">
       <p class="eyebrow">04 / Let's make it happen</p>
-      <span class="small-label">A direct conversation.</span>
+      <span class="small-label">Work directly with Parker.</span>
     </div>
     <div class="contact-grid">
       <div class="contact-copy">
@@ -19,18 +19,18 @@ const { route = false } = Astro.props;
           <h1 id="contact-heading">
             Let’s build your
             <br />
-            <span>next chapter.</span>
+            <span>business website.</span>
           </h1>
         ) : (
           <h2 id="contact-heading">
             Let’s build your
             <br />
-            <span>next chapter.</span>
+            <span>business website.</span>
           </h2>
         )}
         <p>
-          Tell me what you do, where you want to go, and what your website needs
-          to accomplish. We’ll start there.
+          Ready to hire someone to build a business website? Tell me your goals,
+          the pages you need, and your timeline. I work with businesses nationwide.
         </p>
         <div class="owner">
           <span class="owner-monogram" aria-hidden="true">
@@ -59,8 +59,8 @@ const { route = false } = Astro.props;
       </div>
       <form id="project-form" class="project-form" data-email={studio.email}>
         <div class="form-heading">
-          <h3>Start your project.</h3>
-          <span class="small-label">Your next chapter</span>
+          <h3>Plan your website.</h3>
+          <span class="small-label">Your business goals</span>
         </div>
         <div class="field-pair">
           <div class="field">
@@ -102,7 +102,7 @@ const { route = false } = Astro.props;
           />
         </div>
         <div class="field">
-          <label for="project-package">Package</label>
+          <label for="project-package">Which package fits?</label>
           <select id="project-package" name="package">
             <option value="unsure">I’d like help choosing</option>
             {packages.map((plan) => (
@@ -132,7 +132,7 @@ const { route = false } = Astro.props;
             minlength="10"
             maxlength="1800"
             rows="4"
-            placeholder="Your business, the pages or features you need, and your ideal timeline…"
+            placeholder="Your services, the pages or features you need, your budget, and your ideal timeline…"
           ></textarea>
         </div>
         <button class="button button-blue" type="submit" disabled>

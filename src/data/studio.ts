@@ -11,24 +11,24 @@ export const studio = {
 export type Page = "home" | "services" | "pricing" | "contact" | "notfound";
 export const metadata: Record<Page, { title: string; description: string }> = {
   home: {
-    title: "Albrecht Web Co. | Military-Owned Custom Website Design",
+    title: "Affordable Custom Website Design | Albrecht Web Co.",
     description:
-      "Military-owned and operated web design. Bold, mobile-friendly websites from $300, with Professional and Deluxe options and a 15% veteran discount.",
+      "Affordable custom website design for businesses nationwide. Custom coded websites from $300, clear packages, and personal support from Parker Albrecht.",
   },
   services: {
-    title: "Custom Website Design & Development | Albrecht Web Co.",
+    title: "Custom Coded Websites for Small Businesses | Albrecht Web Co.",
     description:
-      "Custom web design with responsive layouts, interactive experiences, clear navigation, and search-friendly structure. Built by Albrecht Web Co.",
+      "Custom coded websites for small businesses, built around your brand with mobile-friendly layouts, clear navigation, and search-friendly page structure.",
   },
   pricing: {
-    title: "Website Design Packages from $300 | Albrecht Web Co.",
+    title: "Small Business Website Packages | Albrecht Web Co.",
     description:
-      "Compare Basic at $300, Professional at $700, and Deluxe at $1,300 plus $100/month. Veterans receive 15% off with Albrecht Web Co.",
+      "Small business website packages: Basic $300, Professional $700, Deluxe $1,300 + $100/month. Explore small business website design under $500.",
   },
   contact: {
-    title: "Start Your Website Project | Albrecht Web Co.",
+    title: "Hire Someone to Build a Business Website | Albrecht Web Co.",
     description:
-      "Talk directly with Albrecht Web Co. about a custom website. Email Albrechtp919@gmail.com or call (816) 738-6774 to start your project.",
+      "Ready to hire someone to build a business website? Work directly with Parker Albrecht. Tell me your goals, budget, and pages to get your project started.",
   },
   notfound: {
     title: "Page Not Found | Albrecht Web Co.",
@@ -43,15 +43,15 @@ export const packages = [
     number: "01",
     price: 300,
     monthly: 0,
-    tagline: "Your first great impression.",
+    tagline: "Your business, online.",
     description:
-      "A complete, polished foundation for businesses ready to make their mark online.",
+      "Small business website design under $500, starting at $300. Introduce your services and make it easy to get in touch.",
     features: [
-      "Custom design for your brand",
-      "Mobile and desktop layouts",
-      "Your services and business essentials",
+      "Custom design around your brand",
+      "Layouts for phones and desktops",
+      "Your services and business details",
       "Clear contact and inquiry links",
-      "Search-friendly page titles and structure",
+      "Descriptive page titles and structure",
     ],
     action: "Start with Basic",
   },
@@ -61,9 +61,9 @@ export const packages = [
     number: "02",
     price: 700,
     monthly: 0,
-    tagline: "More business. More possibility.",
+    tagline: "Room for a growing business.",
     description:
-      "A more detailed, advanced website for established businesses with a growing clientele and products to showcase.",
+      "A detailed website for growing businesses, with expanded service and product sections, advanced interactions, and clear navigation.",
     features: [
       "Everything in Basic",
       "More detailed service and product sections",
@@ -79,9 +79,9 @@ export const packages = [
     number: "03",
     price: 1300,
     monthly: 100,
-    tagline: "Your most ambitious move yet.",
+    tagline: "A custom site with ongoing care.",
     description:
-      "A premium web experience with deeper functionality, intentional page routing, and ongoing attention.",
+      "A premium custom website with advanced interactions, dedicated page URLs, and monthly care to keep your content up to date.",
     features: [
       "Everything in Professional",
       "Premium interactive design",
@@ -107,7 +107,7 @@ export const projects = [
     desktop: "/portfolio/last-round-desktop.webp",
     mobile: "/portfolio/last-round-mobile.webp",
     description:
-      "A better night out, from the first plan to the last round. Drink tracking, group plans, venue discovery, and tools for local businesses.",
+      "A custom nightlife platform for drink tracking, group plans, venue discovery, and business listings, designed for desktop and mobile.",
     services: ["Product design", "Responsive development", "Supabase & Stripe"],
     source:
       "Desktop captured from the live website on October 5, 2026. Mobile captured from the supplied October 1 source.",
@@ -126,7 +126,7 @@ export const projects = [
     desktop: "/portfolio/rotateiq-desktop.webp",
     mobile: "/portfolio/rotateiq-mobile.webp",
     description:
-      "Read the zone. Plan the next move. An interactive Fortnite map with safe circles, traffic estimates, timing, and rotation planning.",
+      "An interactive Fortnite map with safe-circle controls, traffic estimates, timing tools, and rotation planning for competitive players.",
     services: ["Interactive maps", "Route planning", "Responsive interface"],
     source:
       "Rendered from the supplied index16.astro source, last updated September 16, 2026. Public launch URL not supplied.",
@@ -145,7 +145,7 @@ export const projects = [
     desktop: "/portfolio/wick-desktop.webp",
     mobile: "/portfolio/wick-mobile.webp",
     description:
-      "Trading, understood. An education platform with approachable lessons, interactive tools, paper trading, and an AI coach interface.",
+      "A trading education platform with clear lessons, interactive practice tools, paper trading, and an AI coach interface.",
     services: ["Education platform", "Interactive tools", "AI coach interface"],
     source:
       "Rendered from the supplied wick-vscode 2.zip build dated October 1, 2026. Public launch URL and production coach connection not verified.",
