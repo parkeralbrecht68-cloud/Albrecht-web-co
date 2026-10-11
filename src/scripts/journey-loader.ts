@@ -10,6 +10,17 @@ export function initJourneyControls(ready: Promise<void> = Promise.resolve()) {
   const status = root.querySelector<HTMLElement>(".journey-status")!;
   const cue = root.querySelector<HTMLElement>("[data-journey-cue]")!;
   const preference = matchMedia("(prefers-reduced-motion: reduce)");
+  const founderProfile = root.querySelector<HTMLElement>(".founder-profile");
+  // The pinned journey already fades the entire chapter. This also gives the
+  // portrait and caption a reversible fade when the page uses its still layout.
+  const founderObserver = founderProfile && "IntersectionObserver" in window
+    ? new IntersectionObserver(([entry]) => {
+        root.dataset.founderFade = entry.isIntersecting && entry.intersectionRatio >= 0.08
+          ? "visible"
+          : "hidden";
+      }, { rootMargin: "-64px 0px -48px 0px", threshold: 0.08 })
+    : undefined;
+  if (founderProfile) founderObserver?.observe(founderProfile);
   let handle: JourneyHandle | undefined;
   let pending: Promise<JourneyHandle | undefined> | undefined;
   let mode: JourneyMode = "scroll";
@@ -118,11 +129,14 @@ export function initJourneyControls(ready: Promise<void> = Promise.resolve()) {
     } else void start();
   });
   addEventListener("pagehide", () => {
+    founderObserver?.disconnect();
+    root.removeAttribute("data-founder-fade");
     handle?.destroy();
     handle = undefined;
   });
   addEventListener("pageshow", (event) => {
     if (event.persisted) {
+      if (founderProfile) founderObserver?.observe(founderProfile);
       if (preference.matches && !optedIn) showStill(true);
       else void start();
     }

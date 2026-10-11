@@ -13,6 +13,7 @@ interface Props {
 const { page = "home" } = Astro.props;
 const meta = metadata[page];
 const canonical = `${studio.url}${page === "home" ? "/" : `/${page}/`}`;
+const socialImage = `${studio.url}/social-card.png`;
 const navLink = (name: string) =>
   page === "home" ? `#${name}` : name === "work" ? "/#work" : `/${name}/`;
 const schema = {
@@ -111,9 +112,17 @@ const schema = {
     <meta property="og:site_name" content={studio.name} />
     <meta property="og:title" content={meta.title} />
     <meta property="og:description" content={meta.description} />
-    <meta property="og:url" content={canonical} />
+    {page !== "notfound" && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Albrecht Web Co. — custom websites for small businesses, personally built by Parker Albrecht."
+    />
     <meta property="og:locale" content="en_US" />
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:title" content={meta.title} />
     <meta name="twitter:description" content={meta.description} />
     {page !== "notfound" && (
