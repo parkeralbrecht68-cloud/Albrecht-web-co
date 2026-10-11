@@ -1,5 +1,5 @@
 ---
-import { studio, packages } from "../data/studio";
+import { studio, packages, maintenance } from "../data/studio";
 const { route = false } = Astro.props;
 ---
 
@@ -54,14 +54,18 @@ const { route = false } = Astro.props;
         <p class="contact-footnote">
           Military owned & operated.
           <br />
-          Veterans receive 15% off every package and Deluxe monthly care.
+          Veterans receive 15% off every package and optional website care.
         </p>
       </div>
-      <form id="project-form" class="project-form" data-email={studio.email}>
+      <form id="project-form" class="project-form" data-email={studio.email} aria-describedby="inquiry-method">
         <div class="form-heading">
           <h3>Plan your website.</h3>
           <span class="small-label">Your business goals</span>
         </div>
+        <p class="inquiry-method" id="inquiry-method">
+          Share your project details to create an email draft. You review it
+          and send it yourself using your email app or Gmail in your browser.
+        </p>
         <div class="field-pair">
           <div class="field">
             <label for="client-name">
@@ -108,7 +112,7 @@ const { route = false } = Astro.props;
             {packages.map((plan) => (
               <option value={plan.id}>
                 {plan.name} — ${plan.price.toLocaleString("en-US")}{" "}
-                {plan.monthly ? `setup + $${plan.monthly}/month` : "one time"}
+                one time
               </option>
             ))}
           </select>
@@ -117,6 +121,14 @@ const { route = false } = Astro.props;
           <input type="checkbox" id="contact-veteran" name="veteran" />
           <span>I’m a veteran — apply the 15% discount.</span>
         </label>
+        <label class="veteran-field care-field">
+          <input type="checkbox" id="contact-maintenance" name="maintenance" aria-describedby="contact-care-note" />
+          <span>I’d like optional website care — from <strong data-base-price={maintenance.price}>${maintenance.price}</strong>/month.</span>
+        </label>
+        <p class="form-note contact-care-note" id="contact-care-note">
+          Routine updates and minor content changes. The exact scope and
+          response times are confirmed separately before you commit.
+        </p>
         <div class="estimate" id="project-estimate" hidden>
           <span class="eyebrow">Your package estimate</span>
           <strong id="estimate-price"></strong>
@@ -136,10 +148,11 @@ const { route = false } = Astro.props;
           ></textarea>
         </div>
         <button class="button button-blue" type="submit" disabled>
-          Prepare project email
+          Create email draft
         </button>
         <p class="form-note">
-          Opens an email draft for you to review and send.
+          No email app configured? Open the draft in Gmail or copy it into your
+          preferred email service.
         </p>
         <noscript>
           <p>
@@ -155,7 +168,10 @@ const { route = false } = Astro.props;
               id="open-draft"
               href={`mailto:${studio.email}`}
             >
-              Open email draft again
+              Open draft in email app
+            </a>
+            <a class="text-link" id="open-gmail-draft" href="https://mail.google.com/mail/" target="_blank" rel="noopener noreferrer">
+              Open draft in Gmail<span class="sr-only"> (opens in a new tab)</span>
             </a>
             <button type="button" id="copy-draft">
               Copy project details

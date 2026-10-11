@@ -2424,6 +2424,181 @@ input[type="checkbox"] {
   line-height: 1.45;
 }
 
+.work-case-study {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+.case-study-intro h3 {
+  margin-top: 16px;
+  font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+  line-height: 1.15;
+}
+.case-study-intro > p:last-child {
+  max-width: 760px;
+  margin-top: 20px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.case-study-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 32px 0;
+}
+.case-study-item {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.case-study-item dt {
+  font-size: 0.8125rem;
+  color: #a5c2ff;
+}
+.case-study-item dd {
+  margin: 12px 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.case-study-takeaway {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+.case-study-takeaway p {
+  max-width: 780px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.case-study-takeaway .text-link {
+  flex-shrink: 0;
+}
+.scope-guide-note {
+  max-width: 900px;
+  margin-bottom: 28px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.scope-guide-note strong {
+  color: var(--white);
+  font-weight: 500;
+}
+.plan-scope {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8125rem;
+}
+.plan-scope > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+}
+.plan-scope dt {
+  color: var(--muted);
+}
+.plan-scope dd {
+  max-width: 12em;
+  margin: 0;
+  text-align: right;
+}
+.care-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(220px, 1fr);
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: #ffffff03;
+}
+.care-option h3 {
+  margin-top: 12px;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.2;
+}
+.care-option > div > p:not(.eyebrow) {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+.care-option .care-scope-note {
+  font-size: 0.75rem;
+}
+.care-price {
+  justify-self: end;
+}
+.care-price strong {
+  color: var(--white);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+}
+.care-price .text-link {
+  margin-top: 18px;
+}
+.scope-details {
+  margin-top: 32px;
+}
+.scope-details details {
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.scope-details summary {
+  cursor: pointer;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.scope-details p {
+  max-width: 850px;
+  margin-top: 16px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.inquiry-method {
+  margin-bottom: 28px;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.contact-care-note {
+  margin: -14px 0 24px;
+  line-height: 1.7;
+}
+.care-field strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+@media (max-width: 800px) {
+  .case-study-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .case-study-takeaway {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .care-option {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px;
+  }
+  .care-price {
+    justify-self: start;
+  }
+}
+
 @media screen and (prefers-reduced-motion: no-preference) {
   .journey[data-founder-fade]:not(.journey-enhanced) .founder-profile {
     opacity: 0;
@@ -2555,4 +2730,23 @@ input[type="checkbox"] {
     font-size: 0.7rem;
     line-height: 1.35;
   }
+}
+
+/* Still-mode controls follow the hero's real height, including short windows. */
+.journey-controls-ready:not(.journey-enhanced) .chapter-idea {
+  min-height: calc(100svh - 140px);
+  padding-bottom: clamp(40px, 6vh, 72px);
+}
+.journey-controls-ready:not(.journey-enhanced) .journey-bottom {
+  position: relative;
+  top: auto;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  max-width: none;
+  padding-inline: 0;
+  padding-bottom: 40px;
+}
+.journey-enhanced .journey-bottom {
+  pointer-events: auto;
 }

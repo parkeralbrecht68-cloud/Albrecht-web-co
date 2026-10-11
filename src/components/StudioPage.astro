@@ -1,5 +1,5 @@
 ---
-import { studio, packages, metadata, type Page } from "../data/studio";
+import { studio, packages, maintenance, metadata, type Page } from "../data/studio";
 import Journey from "./Journey.astro";
 import Portfolio from "./Portfolio.astro";
 import Services from "./Services.astro";
@@ -57,31 +57,7 @@ const schema = {
             url: `${studio.url}/pricing/`,
             price: plan.price,
             priceCurrency: "USD",
-            description: plan.monthly
-              ? "$1,300 setup plus $100/month for ongoing website care and updates. Veterans receive 15% off both."
-              : `${plan.name} website design. Veterans receive 15% off.`,
-            ...(plan.monthly
-              ? {
-                  priceSpecification: {
-                    "@type": "CompoundPriceSpecification",
-                    priceComponent: [
-                      {
-                        "@type": "UnitPriceSpecification",
-                        price: 1300,
-                        priceCurrency: "USD",
-                        name: "One-time website setup",
-                      },
-                      {
-                        "@type": "UnitPriceSpecification",
-                        price: 100,
-                        priceCurrency: "USD",
-                        unitText: "month",
-                        name: "Monthly website care",
-                      },
-                    ],
-                  },
-                }
-              : {}),
+            description: `${plan.name} website design, one-time project price. Optional maintenance starts at $${maintenance.price}/month. Veterans receive 15% off the project and optional care.`,
           },
         }))
       : []),

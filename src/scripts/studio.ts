@@ -1,4 +1,4 @@
-import { packages, studio } from "../data/studio";
+import { packages, studio, maintenance } from "../data/studio";
 
 export function initStudio() {
   const money = (n: number) =>
@@ -13,11 +13,15 @@ export function initStudio() {
   const all = <T extends Element = HTMLElement>(s: string) => [
     ...document.querySelectorAll<T>(s),
   ];
+  const clearDraft = () => $("#draft-ready")?.setAttribute("hidden", "");
   const query = new URLSearchParams(location.search);
   const priceToggle = $<HTMLInputElement>("#veteran-toggle");
   const contactToggle = $<HTMLInputElement>("#contact-veteran");
+  const careToggle = $<HTMLInputElement>("#contact-maintenance");
   const packageSelect = $<HTMLSelectElement>("#project-package");
   let veteran = query.get("veteran") === "true";
+  let wantsCare = query.get("maintenance") === "true";
+  if (careToggle) careToggle.checked = wantsCare;
   const estimate = () => {
     const selected = packageSelect ? plans[packageSelect.value] : null;
     const area = $("#project-estimate");
@@ -26,10 +30,11 @@ export function initStudio() {
       const rate = veteran ? studio.veteranRate : 1;
       const node = $("#estimate-price");
       if (node)
-        node.textContent = `${money(selected.price * rate)} ${selected.monthly ? "setup" : "one time"}${selected.monthly ? ` + ${money(selected.monthly * rate)}/month` : ""}${veteran ? " · veteran pricing" : ""}`;
+        node.textContent = `${money(selected.price * rate)} one time${wantsCare ? ` + optional care from ${money(maintenance.price * rate)}/month` : ""}${veteran ? " · veteran pricing" : ""}`;
     }
   };
   const refresh = (announce = false) => {
+    clearDraft();
     const rate = veteran ? studio.veteranRate : 1;
     if (priceToggle) priceToggle.checked = veteran;
     if (contactToggle) contactToggle.checked = veteran;
@@ -39,7 +44,7 @@ export function initStudio() {
     all("[data-saving-base]").forEach(
       (el) =>
         (el.textContent = veteran
-          ? `Veteran savings: ${money(Number(el.dataset.savingBase) * 0.15)}${el.closest("[data-plan=deluxe]") ? " + $15/month" : ""}`
+          ? `Veteran savings: ${money(Number(el.dataset.savingBase) * 0.15)}`
           : ""),
     );
     if (packageSelect)
@@ -48,21 +53,20 @@ export function initStudio() {
           `option[value="${plan.id}"]`,
         );
         if (option)
-          option.textContent = `${plan.name} — ${money(plan.price * rate)} ${plan.monthly ? `setup + ${money(plan.monthly * rate)}/month` : "one time"}`;
+          option.textContent = `${plan.name} — ${money(plan.price * rate)} one time`;
       });
-    all<HTMLAnchorElement>("[data-select-plan]").forEach((el) => {
+    all<HTMLAnchorElement>("[data-select-plan], [data-maintenance-select]").forEach((el) => {
       if (el.getAttribute("href")?.startsWith("#")) return;
       const url = new URL(el.href);
-      url.searchParams.set("package", el.dataset.selectPlan!);
+      if (el.dataset.selectPlan) url.searchParams.set("package", el.dataset.selectPlan);
+      if (el.hasAttribute("data-maintenance-select")) url.searchParams.set("maintenance", "true");
       if (veteran) url.searchParams.set("veteran", "true");
       else url.searchParams.delete("veteran");
       el.href = url.pathname + url.search + url.hash;
     });
     const announcement = $("#pricing-announcement");
     if (announcement && announce)
-      announcement.textContent = veteran
-        ? "Veteran pricing applied. Basic $255. Professional $595. Deluxe $1,105 setup plus $85 per month."
-        : "Standard pricing applied. Basic $300. Professional $700. Deluxe $1,300 setup plus $100 per month.";
+      announcement.textContent = `${veteran ? "Veteran" : "Standard"} pricing applied. ${packages.map((plan) => `${plan.name} ${money(plan.price * rate)}`).join(". ")}. Optional care starts at ${money(maintenance.price * rate)} per month.`;
     estimate();
   };
   [priceToggle, contactToggle].forEach((el) =>
@@ -74,13 +78,24 @@ export function initStudio() {
   if (packageSelect && plans[query.get("package") || ""])
     packageSelect.value = query.get("package")!;
   packageSelect?.addEventListener("change", estimate);
+  careToggle?.addEventListener("change", () => {
+    wantsCare = careToggle.checked;
+    estimate();
+  });
   // Event delegation also reads the updated plan recommendation.
   document.addEventListener("click", (event) => {
     const link = (event.target as Element).closest<HTMLAnchorElement>(
-      "[data-select-plan]",
+      "[data-select-plan], [data-maintenance-select]",
     );
     if (link && packageSelect && plans[link.dataset.selectPlan!]) {
       packageSelect.value = link.dataset.selectPlan!;
+      clearDraft();
+      estimate();
+    }
+    if (link?.hasAttribute("data-maintenance-select") && careToggle) {
+      wantsCare = true;
+      careToggle.checked = true;
+      clearDraft();
       estimate();
     }
   });
@@ -177,9 +192,6 @@ export function initStudio() {
       false;
     let draft = "";
     const draftArea = $("#draft-ready")!;
-    const clearDraft = () => {
-      draftArea.hidden = true;
-    };
     form.addEventListener("input", clearDraft);
     form.addEventListener("change", clearDraft);
     form.addEventListener("submit", (event) => {
@@ -190,17 +202,23 @@ export function initStudio() {
       const selected = plans[field("package")];
       const rate = veteran ? studio.veteranRate : 1;
       const price = selected
-        ? `${money(selected.price * rate)} ${selected.monthly ? "setup" : "one time"}${selected.monthly ? ` + ${money(selected.monthly * rate)}/month` : ""}`
+        ? `${money(selected.price * rate)} one time`
         : "Please help me choose a package.";
-      draft = `Hello Albrecht Web Co.,\n\nI’d like to discuss a website project.\n\nName: ${field("name")}\nEmail: ${field("email")}\nBusiness: ${field("business") || "Not specified"}\nPackage: ${selected?.name || "Help me choose"}\nVeteran discount: ${veteran ? "Requested (15%)" : "Not requested"}\nPackage estimate: ${price}\n\nProject details:\n${field("details")}\n\nI understand the project scope and any separate costs will be confirmed before work begins.\n`;
-      const href = `mailto:${studio.email}?subject=${encodeURIComponent(`Website project — ${field("business") || field("name")}`)}&body=${encodeURIComponent(draft)}`;
+      const careRequest = wantsCare
+        ? `Requested — from ${money(maintenance.price * rate)}/month, scope to confirm`
+        : "Not requested";
+      draft = `Hello Albrecht Web Co.,\n\nI’d like to discuss a website project.\n\nName: ${field("name")}\nEmail: ${field("email")}\nBusiness: ${field("business") || "Not specified"}\nPackage: ${selected?.name || "Help me choose"}\nVeteran discount: ${veteran ? "Requested (15%)" : "Not requested"}\nPackage estimate: ${price}\nOptional website care: ${careRequest}\n\nProject details:\n${field("details")}\n\nI understand the final page count, revision rounds, schedule, and any separate costs will be confirmed in my quote before work begins.\n`;
+      const subject = `Website project — ${field("business") || field("name")}`;
+      const href = `mailto:${studio.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(draft)}`;
+      const gmail = new URL("https://mail.google.com/mail/");
+      gmail.search = new URLSearchParams({ view: "cm", fs: "1", to: studio.email, su: subject, body: draft }).toString();
       $<HTMLTextAreaElement>("#draft-text")!.value = draft;
       $<HTMLAnchorElement>("#open-draft")!.href = href;
+      $<HTMLAnchorElement>("#open-gmail-draft")!.href = gmail.href;
       $("#form-status")!.textContent =
-        `Your draft is ready. Review and send it in your email app. If the app didn’t open, copy the details below and email ${studio.email}.`;
+        `Your draft is ready. Open it in your email app or Gmail, then review and send. You can also copy the draft into another email service and send it to ${studio.email}.`;
       $("#copy-draft")!.textContent = "Copy project details";
       draftArea.hidden = false;
-      location.href = href;
     });
     $("#copy-draft")?.addEventListener("click", async () => {
       try {

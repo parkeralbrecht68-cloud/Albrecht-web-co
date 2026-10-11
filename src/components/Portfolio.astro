@@ -1,5 +1,5 @@
 ---
-import { projects } from "../data/studio";
+import { projects, portfolioCaseStudy } from "../data/studio";
 import { macbookKeyboard } from "../data/device";
 ---
 
@@ -156,6 +156,25 @@ import { macbookKeyboard } from "../data/device";
         </article>
       ))}
     </div>
+    <article class="work-case-study" aria-labelledby="case-study-heading">
+      <div class="case-study-intro">
+        <p class="eyebrow">A closer look / {portfolioCaseStudy.name}</p>
+        <h3 id="case-study-heading">{portfolioCaseStudy.heading}</h3>
+        <p>{portfolioCaseStudy.introduction}</p>
+      </div>
+      <dl class="case-study-grid">
+        {portfolioCaseStudy.details.map((detail) => (
+          <div class="case-study-item">
+            <dt>{detail.label}</dt>
+            <dd>{detail.description}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="case-study-takeaway">
+        <p>{portfolioCaseStudy.takeaway}</p>
+        <a class="text-link" href="#contact">Talk about your website</a>
+      </div>
+    </article>
     <noscript>
       <p>
         JavaScript is off. All three projects and their desktop and mobile

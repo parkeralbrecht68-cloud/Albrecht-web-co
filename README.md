@@ -66,13 +66,14 @@ The main `src/pages/index.astro` is deliberately short: it imports the complete 
 
 | Package | Standard | Veteran |
 | --- | --- | --- |
-| Basic | $300 one time | $255 one time |
-| Professional | $700 one time | $595 one time |
-| Deluxe | $1,300 setup + $100/month | $1,105 setup + $85/month |
+| Starter | $300 one time | $255 one time |
+| Business | $700 one time | $595 one time |
+| Premium | $1,300 one time | $1,105 one time |
+| Optional website care | From $100/month | From $85/month |
 
-These are the values in the supplied agency source, including **Professional at $700**. The discount applies to Deluxe setup and monthly care. The Professional package keeps two update rounds per year. Domain, hosting, paid tools, and expanded scope remain separate costs to confirm before work begins.
+The owner supplied the Starter, Business, and Premium package names and requested optional maintenance. Proposed scope is up to 3/7/12 pages, 2/3/4 design revision rounds, and estimated builds of 3–5/5–10/10–21 business days. These are labeled as planning standards; the written quote confirms final scope and schedule after content and access are ready. Business and Premium retain the two annual website update rounds from the existing offering. Domain, hosting, paid tools, and expanded scope are priced separately. Optional care covers routine updates and minor content changes, with exact tasks, limits, and response times confirmed in the care agreement.
 
-The contact area uses **Parker Albrecht**, **Albrechtp919@gmail.com**, and **(816) 738-6774**. The form prepares an email draft to review and send. It also displays a copyable draft if an email application is unavailable. It does not claim to send a message through a backend. Email and phone links work without JavaScript.
+The contact area uses **Parker Albrecht**, **Albrechtp919@gmail.com**, and **(816) 738-6774**. **Create email draft** prepares a message on the page for the visitor to review and send using an email app, Gmail in the browser, or a copyable draft. Optional care is explicitly selected rather than added automatically. There is no direct submission backend. Email and phone links work without JavaScript.
 
 ## Portfolio assets and links
 
